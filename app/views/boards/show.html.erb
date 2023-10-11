@@ -1,51 +1,90 @@
 <div>
-  <div>
-    <h1>
-      Board #<%= @the_board.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/boards">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_board/<%= @the_board.id %>">
-          Delete board
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_board.name %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
+  <a href = "/board"> Bulletin Board</a>
 </div>
 
 <hr>
 
+<div>
+  <h1> <%=@the_board.name%></h1>
+</div>
 
+<hr>
+
+<div>
+  <h2>Add Posts </h2>
+</div>
+
+<form action = "/modify_board/<%=@the_board.id %>" method = "post" >
+  <div>
+    <label for  = "title_box">
+      Title
+    </label>
+    <input type = "text" id = "title_box" name = "title_query">
+  </div>
+
+  <div>
+    <label for = "body_box">
+      Body 
+    </label>
+    <input type = "text" id = "body_box" name = "body_query">
+  </div>
+  <div>
+    <label for = "expire_box">
+      Expires on
+    </label>
+    <input type = "text" id = "expire_box" name = "expire_box">
+  </div>
+
+  <button>
+    Add post
+  </button>
+</form>
+
+<table border = 1>
+  <tr>
+    <th>
+      Title
+    </th>
+
+    <th>
+      Body
+    </th>
+
+    <th>
+      Posted on
+    </th>
+
+    <th>
+      Expired on
+    </th>
+  </tr>
+
+  <%@the_board.posts.each do |a_post|%>
+
+    <tr>
+      
+        <td> 
+          <%=a_post.title%>
+        </td>
+
+        <td> 
+          <%=a_post.body%>
+        </td>
+
+        <td>
+          <%=a_post.created_at%>
+        </td>
+
+        <td>
+          <%=a_post.expires_on%>
+        </td>
+      </tr>
+  <%end%>
+
+</table>
+
+
+</form>
 <div>
   <div>
     <h2>
