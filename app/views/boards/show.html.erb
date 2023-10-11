@@ -14,31 +14,40 @@
   <h2>Add Posts </h2>
 </div>
 
-<form action = "/modify_board/<%=@the_board.id %>" method = "post" >
+<form action = "/insert_post/" method = "post" >
   <div>
     <label for  = "title_box">
       Title
     </label>
-    <input type = "text" id = "title_box" name = "title_query">
+    <input type = "text" id = "title_box" name = "query_title">
   </div>
 
   <div>
     <label for = "body_box">
       Body 
     </label>
-    <input type = "text" id = "body_box" name = "body_query">
+    <textarea name ="query_body" id = "body_box"> </textarea>
   </div>
   <div>
     <label for = "expire_box">
       Expires on
     </label>
-    <input type = "text" id = "expire_box" name = "expire_box">
+    <input type = "date" id = "expire_box" name = "query_expires_on">
+  </div>
+  <div>
+    <label for  = "id_box">
+      Board ID
+    </label>
+    <input type = "text" id = "id_box" name = "query_board_id" value = "<%=@the_board.id%>">
   </div>
 
   <button>
     Add post
   </button>
 </form>
+<div>
+  <h2> Active posts </h2>
+</div>
 
 <table border = 1>
   <tr>
@@ -62,7 +71,7 @@
   <%@the_board.posts.each do |a_post|%>
 
     <tr>
-      
+      <%if a_post.expires_on < Time.now%>
         <td> 
           <%=a_post.title%>
         </td>
@@ -79,32 +88,56 @@
           <%=a_post.expires_on%>
         </td>
       </tr>
+    <%end%>
+  <%end%>
+
+</table>
+
+<table border = 1>
+  <tr>
+    <th>
+      Title
+    </th>
+
+    <th>
+      Body
+    </th>
+
+    <th>
+      Posted on
+    </th>
+
+    <th>
+      Expired on
+    </th>
+  </tr>
+<div>
+  <h2> Expired posts </h2>
+</div>
+  <%@the_board.posts.each do |a_post|%>
+
+    <tr>
+      <%if a_post.expires_on > Time.now%>
+        <td> 
+          <%=a_post.title%>
+        </td>
+
+        <td> 
+          <%=a_post.body%>
+        </td>
+
+        <td>
+          <%=a_post.created_at%>
+        </td>
+
+        <td>
+          <%=a_post.expires_on%>
+        </td>
+      </tr>
+    <%end%>
   <%end%>
 
 </table>
 
 
 </form>
-<div>
-  <div>
-    <h2>
-      Edit board
-    </h2>
-
-    <form action="/modify_board/<%= @the_board.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
-
-        <input type="text" id="name_box" name="query_name" value="<%= @the_board.name %>">
-      </div>
-
-      <button>
-        Update board
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>

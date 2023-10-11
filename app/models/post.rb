@@ -11,5 +11,9 @@
 #  board_id   :integer
 #
 class Post < ApplicationRecord
+  validates(:body, {:presence => true})
+  validates(:title, {:presence => true})
+  validates(:expires_on, {:presence => true})
+  validates(:board_id, {:presence => true})
   belongs_to(:board, :class_name => "Board", :foreign_key => "board_id")
 end
